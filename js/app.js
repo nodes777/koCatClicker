@@ -1,3 +1,41 @@
+var initialCats = [
+	{
+		clickCount: 0,
+		name: "Carly",
+		imgSrc: "img/cat.jpg",
+		imgAttribution: "Somebody",
+		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
+	},
+	{
+		clickCount: 0,
+		name: "Sneaker",
+		imgSrc: "img/cat2.jpg",
+		imgAttribution: "Somebody",
+		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
+	},
+	{
+		clickCount: 0,
+		name: "Sleeps",
+		imgSrc: "img/cat3.jpg",
+		imgAttribution: "Somebody",
+		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
+	},
+	{
+		clickCount: 0,
+		name: "Dunzo",
+		imgSrc: "img/cat4.jpg",
+		imgAttribution: "Somebody",
+		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
+	},
+	{
+		clickCount: 0,
+		name: "Harmon",
+		imgSrc: "img/cat5.jpg",
+		imgAttribution: "Somebody",
+		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
+	}
+]
+
 var Cat = function(data) {
 	this.clickCount = ko.observable(data.clickCount);
 	this.name = ko.observable(data.name);
@@ -25,16 +63,19 @@ var Cat = function(data) {
 }
 
 var  ViewModel = function(){
-	this.currentCat = ko.observable(new Cat({
-		clickCount: 0,
-		name: "Carly",
-		imgSrc: "img/cat.jpg",
-		imgAttribution: "Somebody",
-		nickNames: [{name: "Gumbo"}, {name: "Flumpy"}, {name: "Sam"}]
-	})
-	);
+	var self = this;//self always maps to ViewModel
+	this.catList = ko.observableArray([]);
+
+	initialCats.forEach(function(catItem){
+		self.catList.push(new Cat(catItem));
+	});
+
+	this.currentCat = ko.observable(this.catList()[0]);
 	this.incrementCounter = function(){
 		this.clickCount(this.clickCount() + 1);
+	};
+	this.changeCat= function(){
+		alert("click");
 	};
 }
 ko.applyBindings(new ViewModel());
